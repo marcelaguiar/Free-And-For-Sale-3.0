@@ -18,8 +18,7 @@ import com.parse.ParseObject;
 
 
 public class MainActivity extends ActionBarActivity {
-
-  //I changed stuff.
+  
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
