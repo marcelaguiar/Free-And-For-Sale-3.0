@@ -8,17 +8,37 @@
  */
 package com.parse.starter;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.parse.ParseAnalytics;
 import com.parse.ParseObject;
 
 
 public class MainActivity extends ActionBarActivity {
-  
+
+  /** Called when the user clicks the Buy button */
+  public void buyPage(View view) {
+    Intent intent = new Intent(this, BuyPageActivity.class);
+    startActivity(intent);
+  }
+
+  /** Called when the user clicks the Sell button */
+  public void sellPage(View view) {
+    Intent intent = new Intent(this, SellPageActivity.class);
+    startActivity(intent);
+  }
+
+  /** Called when the user clicks the My Listings button */
+  public void myListingsPage(View view) {
+    Intent intent = new Intent(this, MyListingsPageActivity.class);
+    startActivity(intent);
+  }
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

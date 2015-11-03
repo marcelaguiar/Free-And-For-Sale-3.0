@@ -21,8 +21,10 @@
         android:layout_height="wrap_content"
         android:text="Buy"
         android:id="@+id/buyButton"
+        android:layout_marginTop="80dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
+        android:layout_alignLeft="@+id/sellButton"
+        android:layout_alignStart="@+id/sellButton"
         android:onClick="buyPage"/>
 
     <Button
@@ -30,15 +32,19 @@
         android:layout_height="wrap_content"
         android:text="Sell"
         android:id="@+id/sellButton"
-        android:layout_centerVertical="true"
-        android:layout_alignLeft="@+id/buyButton" />
+        android:layout_marginTop="70dp"
+        android:layout_below="@+id/buyButton"
+        android:layout_centerHorizontal="true"
+        android:onClick="sellPage"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="My Listings"
         android:id="@+id/myListingsButton"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_marginTop="70dp"
+        android:layout_below="@+id/sellButton"
+        android:layout_centerHorizontal="true"
+        android:onClick="myListingsPage"/>
 
 </RelativeLayout>
