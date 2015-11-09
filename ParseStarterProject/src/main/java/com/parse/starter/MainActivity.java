@@ -14,28 +14,30 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import com.parse.ParseAnalytics;
 import com.parse.ParseObject;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements View.OnClickListener {
+
 
   /** Called when the user clicks the Buy button */
-  public void buyPage(View view) {
-    Intent intent = new Intent(this, BuyPageActivity.class);
+  public void buyPage() {
+    Intent intent = new Intent(MainActivity.this, BuyPageActivity.class);
     startActivity(intent);
   }
 
   /** Called when the user clicks the Sell button */
-  public void sellPage(View view) {
-    Intent intent = new Intent(this, SellPageActivity.class);
+  public void sellPage() {
+    Intent intent = new Intent(MainActivity.this, SellPageActivity.class);
     startActivity(intent);
   }
 
   /** Called when the user clicks the My Listings button */
-  public void myListingsPage(View view) {
-    Intent intent = new Intent(this, MyListingsPageActivity.class);
+  public void myListingsPage() {
+    Intent intent = new Intent(MainActivity.this, MyListingsPageActivity.class);
     startActivity(intent);
   }
 
@@ -47,6 +49,11 @@ public class MainActivity extends ActionBarActivity {
     testObject.put("oof", "rab");
     testObject.saveInBackground();
     ParseAnalytics.trackAppOpenedInBackground(getIntent());
+
+    // jump
+    findViewById(R.id.buyButton).setOnClickListener(this);
+    findViewById(R.id.sellButton).setOnClickListener(this);
+    findViewById(R.id.myListingsButton).setOnClickListener(this);
   }
 
   @Override
@@ -69,5 +76,20 @@ public class MainActivity extends ActionBarActivity {
     }
 
     return super.onOptionsItemSelected(item);
+  }
+
+  @Override
+  public void onClick(View v) {
+    switch (v.getId()) {
+      case R.id.buyButton:
+        buyPage();
+        break;
+      case R.id.sellButton:
+        sellPage();
+        break;
+      case R.id.myListingsButton:
+        myListingsPage();
+        break;
+    }
   }
 }
