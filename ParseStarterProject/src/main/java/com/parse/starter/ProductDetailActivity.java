@@ -60,7 +60,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     private void initData() {
         Intent intent = getIntent();
-        ParseObject item = (ParseObject)intent.getData();
+        //ParseObject item = (ParseObject)intent.getData();
 
         //TODO get the item's detail
     }

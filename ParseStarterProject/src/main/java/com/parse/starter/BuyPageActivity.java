@@ -48,10 +48,10 @@ public class BuyPageActivity extends AppCompatActivity {
                         //TODO CAST ITEM
                         ParseObject item = (ParseObject)parent.getItemAtPosition(position);
                         Intent intent = new Intent(BuyPageActivity.this, ProductDetailActivity.class);
-                        intent.putExtra("product", item);
+                        //intent.putExtra("product", item);
                         startActivity(intent);
                     } catch (Exception e) {
-                        Logger.e("", "", e);
+                        //Logger.e("", "", e);
                     }
                 }
             });
