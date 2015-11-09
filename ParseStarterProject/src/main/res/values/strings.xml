@@ -18,5 +18,11 @@
     <string name="title_activity_buy_page">BuyPageActivity</string>
     <string name="title_activity_sell_page">SellPageActivity</string>
     <string name="title_activity_my_listings_page">MyListingsPageActivity</string>
+<<<<<<< HEAD
     <string name="title_activity_product_detail_page">ProductDetailActivity</string>
+=======
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+>>>>>>> 557658892534e6db57dfb2eb084cc979a9f353df
 </resources>
