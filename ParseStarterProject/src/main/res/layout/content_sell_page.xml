@@ -16,13 +16,13 @@
         android:id="@+id/title"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:hint="Title e.g. Book, Moby Dick by John Snow"
+        android:hint="@string/title_example"
         android:textColorHint="#BDBDBD"
         android:background="#EEEEEE"
         android:layout_alignParentEnd="false"
         android:layout_alignParentStart="false"
         android:maxLength="50"
-        android:textSize="30dp" />
+        android:textSize="30sp" />
 
     <EditText
         android:layout_width="fill_parent"
@@ -32,11 +32,10 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:background="#EEEEEE"
-        android:contentDescription="hello"
-        android:hint="Brief description of your item 200 char limit. E.g. Brand new book, Moby Dick by John Snow third edition, required for course ABC123"
+        android:hint="@string/description_example"
         android:textColorHint="#BDBDBD"
         android:maxLength="200"
-        android:textSize="20dp" />
+        android:textSize="20sp" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -57,7 +56,7 @@
         android:layout_alignParentEnd="true"
         android:background="#1A237E"
         android:textColor="#FFFFFF"
-        android:textSize="15dp"
+        android:textSize="15sp"
         android:textStyle="bold"
         android:typeface="monospace" />
 </RelativeLayout>

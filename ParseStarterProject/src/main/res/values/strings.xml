@@ -24,4 +24,6 @@
     <string name="sell_string">Sell</string>
     <string name="my_listings_string">My Listings</string>
     <string name="submit_string">Submit</string>
+    <string name="description_example">Brief description of your item 200 char limit. E.g. Brand new book, Moby Dick by John Snow third edition, required for course ABC123</string>
+    <string name="title_example">Title e.g. Book, Moby Dick by John Snow</string>
 </resources>
