@@ -7,7 +7,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/activity_sell_page" tools:context="com.parse.starter.SellPageActivity"
+    tools:showIn="@layout/activity_sell_page" tools:context="com.parse.starter.activity.SellPageActivity"
     android:background="#F7A921">
 
     <EditText
@@ -51,12 +51,13 @@
         android:layout_height="wrap_content"
         android:text="@string/submit_string"
         android:id="@+id/submitButton"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
         android:background="#1A237E"
         android:textColor="#FFFFFF"
         android:textSize="15sp"
         android:textStyle="bold"
-        android:typeface="monospace" />
+        android:typeface="monospace"
+        android:layout_alignTop="@+id/imageButton"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
 </RelativeLayout>

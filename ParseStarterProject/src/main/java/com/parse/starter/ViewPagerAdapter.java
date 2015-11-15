@@ -4,6 +4,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.parse.starter.fragment.ContentMyListingsBuy;
+import com.parse.starter.fragment.ContentMyListingsSell;
+
 import java.util.Locale;
 
 /**

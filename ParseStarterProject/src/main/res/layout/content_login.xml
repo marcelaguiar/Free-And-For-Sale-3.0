@@ -7,8 +7,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/activity_my_listings_page"
-    tools:context="com.parse.starter.activity.MyListingsPageActivity">
-
+    tools:showIn="@layout/activity_login" tools:context="com.parse.starter.activity.LoginActivity">
 
 </RelativeLayout>

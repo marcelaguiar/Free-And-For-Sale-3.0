@@ -12,6 +12,7 @@ import android.app.Application;
 
 import com.parse.Parse;
 import com.parse.ParseACL;
+import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 
 
@@ -27,10 +28,11 @@ public class StarterApplication extends Application {
     // Add your initialization code here
     Parse.initialize(this, "gds31uY6gWaaWNDQN4cuzeLL9sw6rgksONFfUMDp", "wn0QCctHbE3sXOxl4WrfEe9GpNLbPNw9AbOZlhCV");
 
-    ParseUser.enableAutomaticUser();
+//    ParseUser.enableAutomaticUser();
     ParseACL defaultACL = new ParseACL();
     // Optionally enable public read access.
     // defaultACL.setPublicReadAccess(true);
     ParseACL.setDefaultACL(defaultACL, true);
+    ParseInstallation.getCurrentInstallation().saveInBackground();
   }
 }
