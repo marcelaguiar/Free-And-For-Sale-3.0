@@ -9,17 +9,27 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.parse.starter.R;
 
 public class SellPageActivity extends AppCompatActivity {
+
+    Button submit;
+    EditText title;
+    EditText description;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sell_page);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -28,6 +38,42 @@ public class SellPageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 dialog();
+            }
+        });
+
+        initialize();
+    }
+
+    private void initialize() {
+        submit = (Button) findViewById(R.id.submitButton);
+        title = (EditText) findViewById(R.id.title);
+        description = (EditText) findViewById(R.id.description);
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String titleStr = title.getText().toString().trim();
+                String descriptionStr = description.getText().toString().trim();
+
+                if (!titleStr.isEmpty() && !descriptionStr.isEmpty()) {
+                    submit.setEnabled(false);
+                    ParseObject parseObject = new ParseObject("Item");
+                    parseObject.put("title", titleStr);
+                    parseObject.put("description", descriptionStr);
+
+                    parseObject.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            submit.setEnabled(true);
+                            if (e == null) {
+                                Toast.makeText(SellPageActivity.this, "Post successfully", Toast.LENGTH_SHORT).show();
+                                finish();
+                            } else {
+                                Toast.makeText(SellPageActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
             }
         });
     }

@@ -27,10 +27,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        initial();
+        initialize();
     }
 
-    private void initial() {
+    private void initialize() {
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
             goToMain();
@@ -63,11 +63,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     ParseUser.logInInBackground(usernameStr, passwordStr, new LogInCallback() {
                         @Override
                         public void done(ParseUser user, ParseException e) {
-                            if (user != null) {
-                                goToMain();
-                            } else {
-                                Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
+                        if (user != null) {
+                            goToMain();
+                        } else {
+                            Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
                         }
                     });
                 }
@@ -81,10 +81,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     user.signUpInBackground(new SignUpCallback() {
                         @Override
                         public void done(ParseException e) {
-                            if (e != null)
-                                Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                            else
-                                goToMain();
+                        if (e != null)
+                            Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        else
+                            goToMain();
                         }
                     });
                 }

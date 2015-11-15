@@ -4,63 +4,88 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.support.v7.widget.RecyclerView;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.starter.R;
+import com.parse.starter.adapter.RecyclerViewAdapter;
+import com.parse.starter.object.Item;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class BuyPageActivity extends AppCompatActivity {
-        ListView mListView;
+    RecyclerView recyclerView;
+    RecyclerViewAdapter recyclerViewAdapter;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_buy_page);
+        setTitle(R.string.title_activity_buy_page);
 
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_buy_page);
-            setTitle(R.string.title_activity_buy_page);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-            setSupportActionBar(toolbar);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog();
+            }
+        });
 
-            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog();
-                }
-            });
+        recyclerView = (RecyclerView) findViewById(R.id.buying_list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-            mListView = (ListView)findViewById(R.id.buying_list);
+        recyclerViewAdapter = new RecyclerViewAdapter(this);
+        recyclerView.setAdapter(recyclerViewAdapter);
 
-            mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        getData();
 
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position,long id) {
-                    try {
-                        //send buying item to product detail page
-                        //TODO CAST ITEM
-                        ParseObject item = (ParseObject)parent.getItemAtPosition(position);
-                        Intent intent = new Intent(BuyPageActivity.this, ProductDetailActivity.class);
-                        //intent.putExtra("product", item);
-                        startActivity(intent);
-                    } catch (Exception e) {
-                        //Logger.e("", "", e);
+    }
+
+    private void getData() {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Item");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if (e == null) {
+                    List<Item> items = new ArrayList<>();
+                    for (ParseObject parseObject : objects) {
+                        Item item = new Item();
+                        item.title = parseObject.getString("title");
+                        item.description = parseObject.getString("description");
+                        item.createdAt = parseObject.getCreatedAt();
+                        item.updatedAt = parseObject.getUpdatedAt();
+                        items.add(item);
+                        System.out.println(item.createdAt);
                     }
+                    recyclerViewAdapter.setItems(items);
+                } else {
+                    Toast.makeText(BuyPageActivity.this, e.getMessage(), Toast.LENGTH_SHORT);
                 }
-            });
+            }
+        });
+    }
 
-            //TODO GET THE LIST CONTENT
 
-        }
+
+
 
 
     protected void dialog() {
