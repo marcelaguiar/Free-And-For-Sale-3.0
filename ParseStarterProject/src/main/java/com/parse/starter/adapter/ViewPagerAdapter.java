@@ -9,9 +9,6 @@ import com.parse.starter.fragment.ContentMyListingsSell;
 
 import java.util.Locale;
 
-/**
- * Created by kelsiedong on 11/8/15.
- */
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     public ViewPagerAdapter(FragmentManager fm) {

@@ -17,9 +17,6 @@ import com.parse.starter.object.Item;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by kelsiedong on 11/15/15.
- */
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.TextViewHolder> {
 
     private final Context context;

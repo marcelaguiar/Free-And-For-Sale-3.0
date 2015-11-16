@@ -60,6 +60,7 @@ public class SellPageActivity extends AppCompatActivity {
                     ParseObject parseObject = new ParseObject("Item");
                     parseObject.put("title", titleStr);
                     parseObject.put("description", descriptionStr);
+                    parseObject.getACL().setPublicReadAccess(true);
 
                     parseObject.saveInBackground(new SaveCallback() {
                         @Override
