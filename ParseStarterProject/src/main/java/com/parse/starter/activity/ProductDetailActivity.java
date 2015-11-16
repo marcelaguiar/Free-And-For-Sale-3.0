@@ -12,9 +12,13 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.parse.starter.R;
 import com.parse.starter.object.Item;
+
+import java.util.Arrays;
 
 public class ProductDetailActivity extends AppCompatActivity {
 
@@ -24,6 +28,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     TextView tvDescription;
     Button btnBuy;
     Button btnCancel;
+    Item item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +45,11 @@ public class ProductDetailActivity extends AppCompatActivity {
             }
         });
 
-        initView();
+        initialize();
 
-        initData();
     }
 
-    private void initView() {
+    private void initialize() {
 
         tvTitle = (TextView) findViewById(R.id.item_title);
 //        tvPrice = (TextView) findViewById(R.id.item_price);
@@ -54,11 +58,30 @@ public class ProductDetailActivity extends AppCompatActivity {
         btnBuy = (Button)findViewById(R.id.buy_btn);
         btnCancel = (Button)findViewById(R.id.cancel_btn);
 
+
+        Intent intent = getIntent();
+        item = intent.getParcelableExtra("item");
+        tvTitle.setText(item.title);
+        tvDescription.setText(item.description);
+
         btnBuy.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO put the product and user into the data base
-                finish();
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                currentUser.addUnique("buyProduct", item.objectId);
+                currentUser.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null) {
+                            Toast.makeText(ProductDetailActivity.this,
+                                    "An email with your info has already sent to seller successfully", Toast.LENGTH_SHORT).show();
+                            finish();
+                        } else {
+                            Toast.makeText(ProductDetailActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
 
             }
         });
@@ -71,13 +94,6 @@ public class ProductDetailActivity extends AppCompatActivity {
         });
     }
 
-    private void initData() {
-        Intent intent = getIntent();
-        Item item = intent.getParcelableExtra("item");
-        tvTitle.setText(item.title);
-        tvDescription.setText(item.description);
-
-    }
 
 
 

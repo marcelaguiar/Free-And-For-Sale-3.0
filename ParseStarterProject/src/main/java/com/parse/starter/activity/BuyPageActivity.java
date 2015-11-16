@@ -68,12 +68,12 @@ public class BuyPageActivity extends AppCompatActivity {
                     List<Item> items = new ArrayList<>();
                     for (ParseObject parseObject : objects) {
                         Item item = new Item();
+                        item.objectId = parseObject.getObjectId();
                         item.title = parseObject.getString("title");
                         item.description = parseObject.getString("description");
                         item.createdAt = parseObject.getCreatedAt();
                         item.updatedAt = parseObject.getUpdatedAt();
                         items.add(item);
-                        System.out.println(item.createdAt);
                     }
                     recyclerViewAdapter.setItems(items);
                 } else {

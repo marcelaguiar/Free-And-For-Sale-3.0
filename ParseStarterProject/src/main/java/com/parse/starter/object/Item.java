@@ -14,6 +14,7 @@ import java.util.Locale;
  */
 public class Item implements Parcelable {
 
+    public String objectId;
     public String title;
     public String description;
     public int price;
@@ -27,6 +28,7 @@ public class Item implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(objectId);
         dest.writeString(title);
         dest.writeString(description);
         dest.writeInt(price);
@@ -45,6 +47,7 @@ public class Item implements Parcelable {
     };
 
     private Item(Parcel in) {
+        objectId = in.readString();
         title = in.readString();
         description = in.readString();
         price = in.readInt();
