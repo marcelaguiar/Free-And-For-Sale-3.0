@@ -9,6 +9,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -34,15 +36,6 @@ public class MyListingsPageActivity extends AppCompatActivity implements TabLayo
         setContentView(R.layout.activity_my_listings_page);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog();
-            }
-        });
 
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -145,12 +138,35 @@ public class MyListingsPageActivity extends AppCompatActivity implements TabLayo
     }
 
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.action_logout:
+                dialog();
+        }
+
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
     protected void dialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MyListingsPageActivity.this);
-        builder.setMessage("Are you sure to logout?");
-        builder.setTitle("Hint");
+        builder.setMessage(R.string.logout_verify);
+        builder.setTitle(R.string.hint);
 
-        builder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.action_logout, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -159,9 +175,9 @@ public class MyListingsPageActivity extends AppCompatActivity implements TabLayo
                 if (currentUser != null) {
                     ParseUser.logOut();
                     if (ParseUser.getCurrentUser() != null) {
-                        Toast.makeText(MyListingsPageActivity.this, "log out failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MyListingsPageActivity.this, R.string.logout_fail, Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(MyListingsPageActivity.this, "log out successed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MyListingsPageActivity.this, R.string.logout_success, Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(MyListingsPageActivity.this, LoginActivity.class);
                         MyListingsPageActivity.this.finish();
                         startActivity(intent);
@@ -170,7 +186,7 @@ public class MyListingsPageActivity extends AppCompatActivity implements TabLayo
             }
         });
 
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -179,5 +195,6 @@ public class MyListingsPageActivity extends AppCompatActivity implements TabLayo
 
         builder.create().show();
     }
+
 
 }
