@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -36,14 +38,6 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_product_detail_page);
         setTitle(R.string.title_activity_product_detail_page);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog();
-            }
-        });
 
         initialize();
 
@@ -94,15 +88,35 @@ public class ProductDetailActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.action_logout:
+                dialog();
+        }
+
+
+        return super.onOptionsItemSelected(item);
+    }
 
 
     protected void dialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(ProductDetailActivity.this);
-        builder.setMessage("Are you sure to logout?");
-        builder.setTitle("Hint");
+        builder.setMessage(R.string.logout_verify);
+        builder.setTitle(R.string.hint);
 
-        builder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.action_logout, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -111,9 +125,9 @@ public class ProductDetailActivity extends AppCompatActivity {
                 if (currentUser != null) {
                     ParseUser.logOut();
                     if (ParseUser.getCurrentUser() != null) {
-                        Toast.makeText(ProductDetailActivity.this, "log out failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProductDetailActivity.this, R.string.logout_fail, Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(ProductDetailActivity.this, "log out successed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProductDetailActivity.this, R.string.logout_success, Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(ProductDetailActivity.this, LoginActivity.class);
                         ProductDetailActivity.this.finish();
                         startActivity(intent);
@@ -122,7 +136,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             }
         });
 
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();

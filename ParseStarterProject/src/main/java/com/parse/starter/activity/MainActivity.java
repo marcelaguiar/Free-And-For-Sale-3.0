@@ -15,6 +15,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,7 +28,7 @@ import com.parse.ParseUser;
 import com.parse.starter.R;
 
 
-public class MainActivity extends ActionBarActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +44,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     findViewById(R.id.sellButton).setOnClickListener(this);
     findViewById(R.id.myListingsButton).setOnClickListener(this);
 
-
-    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-    fab.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-          dialog();
-      }
-    });
   }
 
   @Override
@@ -66,16 +59,53 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     // automatically handle clicks on the Home/Up button, so long
     // as you specify a parent activity in AndroidManifest.xml.
     int id = item.getItemId();
+      switch (id) {
+          case R.id.action_logout:
+              dialog();
+      }
 
-    //noinspection SimplifiableIfStatement
-    if (id == R.id.action_settings) {
-      return true;
-    }
 
     return super.onOptionsItemSelected(item);
   }
 
-  @Override
+
+    protected void dialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setMessage(R.string.logout_verify);
+        builder.setTitle(R.string.hint);
+
+        builder.setPositiveButton(R.string.action_logout, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                //logout
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                if (currentUser != null) {
+                    ParseUser.logOut();
+                    if (ParseUser.getCurrentUser() != null) {
+                        Toast.makeText(MainActivity.this, R.string.logout_fail, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(MainActivity.this, R.string.logout_success, Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                        MainActivity.this.finish();
+                        startActivity(intent);
+                    }
+                }
+            }
+        });
+
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.create().show();
+    }
+
+
+    @Override
   public void onClick(View v) {
     switch (v.getId()) {
       case R.id.buyButton:
@@ -107,42 +137,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         Intent intent = new Intent(MainActivity.this, MyListingsPageActivity.class);
         startActivity(intent);
     }
-
-    protected void dialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setMessage("Are you sure to logout?");
-        builder.setTitle("Hint");
-
-        builder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                //logout
-                ParseUser currentUser = ParseUser.getCurrentUser();
-                if (currentUser != null) {
-                    ParseUser.logOut();
-                    if (ParseUser.getCurrentUser() != null) {
-                        Toast.makeText(MainActivity.this, "log out failed", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(MainActivity.this, "log out successed", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                        MainActivity.this.finish();
-                        startActivity(intent);
-                    }
-                }
-            }
-        });
-
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-
-        builder.create().show();
-    }
-
 
 
 }

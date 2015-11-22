@@ -14,17 +14,33 @@
     <string name="app_name">Parse Starter Project</string>
 
     <string name="hello_world">Hello World!</string>
+
+    //Action bar strings
     <string name="action_settings">Settings</string>
+    <string name="action_logout">Logout</string>
+
+    //Activity titles
     <string name="title_activity_buy_page">BuyPageActivity</string>
     <string name="title_activity_sell_page">SellPageActivity</string>
     <string name="title_activity_my_listings_page">MyListingsPageActivity</string>
     <string name="title_activity_product_detail_page">ProductDetailActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="buy_string">Buy</string>
     <string name="sell_string">Sell</string>
     <string name="my_listings_string">My Listings</string>
     <string name="submit_string">Submit</string>
+    <string name="hint">Hint</string>
+    <string name="cancel">Cancel</string>
+
+    //Sell hint strings
     <string name="description_example">Brief description of your item 200 char limit. E.g. Brand new book, Moby Dick by John Snow third edition, required for course ABC123</string>
     <string name="title_example">Title e.g. Book, Moby Dick by John Snow</string>
-    <string name="title_activity_login">LoginActivity</string>
+
+    //Logout strings
+    <string name="logout_success">Logged out successfully</string>
+    <string name="logout_fail">Logout failed</string>
+    <string name="logout_verify">Are you sure you want to log out?</string>
+
 </resources>
