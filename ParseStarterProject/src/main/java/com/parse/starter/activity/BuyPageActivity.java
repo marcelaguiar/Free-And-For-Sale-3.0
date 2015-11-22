@@ -61,6 +61,7 @@ public class BuyPageActivity extends AppCompatActivity {
 
     private void getData() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Item");
+        query.addDescendingOrder("createdAt");
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
