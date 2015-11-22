@@ -12,9 +12,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.starter.R;
 import com.parse.starter.adapter.ViewPagerAdapter;
+import com.parse.starter.object.Item;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MyListingsPageActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
 
@@ -53,6 +61,8 @@ public class MyListingsPageActivity extends AppCompatActivity implements TabLayo
         tabLayout.setOnTabSelectedListener(this);
         tabLayout.setupWithViewPager(viewPager);
 
+        getBuyData();
+
     }
 
     // listener for TabLayout's tabs
@@ -68,6 +78,69 @@ public class MyListingsPageActivity extends AppCompatActivity implements TabLayo
 
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
+
+    }
+
+    private void getBuyData() {
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        List<String> buyProducts = (List<String>)currentUser.get("buyProduct");
+        System.out.println("buyProducts" + buyProducts);
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Item").whereContainedIn("objectID", buyProducts);
+        query.addDescendingOrder("createdAt");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if (e == null) {
+                    List<Item> items = new ArrayList<>();
+                    for (ParseObject parseObject : objects) {
+                        Item item = new Item();
+                        item.objectId = parseObject.getObjectId();
+                        item.title = parseObject.getString("title");
+                        item.description = parseObject.getString("description");
+                        item.createdAt = parseObject.getCreatedAt();
+                        item.updatedAt = parseObject.getUpdatedAt();
+                        items.add(item);
+
+                        System.out.println(item.title);
+                    }
+
+                    System.out.println(items);
+                    //TODO
+                    //display the users that the current user has bought
+                } else {
+                }
+            }
+        });
+    }
+
+    private void getSellData() {
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        String userID = (String)currentUser.get("objectID");
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Item").whereContains("ACL", userID);
+        query.addDescendingOrder("createdAt");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if (e == null) {
+                    List<Item> items = new ArrayList<>();
+                    for (ParseObject parseObject : objects) {
+                        Item item = new Item();
+                        item.objectId = parseObject.getObjectId();
+                        item.title = parseObject.getString("title");
+                        item.description = parseObject.getString("description");
+                        item.createdAt = parseObject.getCreatedAt();
+                        item.updatedAt = parseObject.getUpdatedAt();
+                        items.add(item);
+                    }
+
+                    //TODO
+                    //display the users that the current user has bought
+                } else {
+                }
+            }
+        });
 
     }
 
