@@ -14,13 +14,17 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.parse.starter.R;
 import com.parse.starter.object.Item;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class ProductDetailActivity extends AppCompatActivity {
 
@@ -84,27 +88,30 @@ public class ProductDetailActivity extends AppCompatActivity {
             });
         } else if (whichCase == 2) {
             btnBuy.setText("Delete");
-//            btnBuy.setOnClickListener(new OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//
-//                    ParseUser currentUser = ParseUser.getCurrentUser();
-//                    currentUser.addUnique("buyProduct", item.objectId);
-//                    currentUser.saveInBackground(new SaveCallback() {
-//                        @Override
-//                        public void done(ParseException e) {
-//                            if (e == null) {
-//                                Toast.makeText(ProductDetailActivity.this,
-//                                        "An email with your info has already sent to seller successfully", Toast.LENGTH_SHORT).show();
-//                                finish();
-//                            } else {
-//                                Toast.makeText(ProductDetailActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//                    });
-//
-//                }
-//            });
+            btnBuy.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    ParseQuery<ParseObject> query = ParseQuery.getQuery("Item");
+                    query.whereEqualTo("objectId", item.objectId);
+                    query.findInBackground(new FindCallback<ParseObject>() {
+                        @Override
+                        public void done(List<ParseObject> objects, ParseException e) {
+                            if (e == null) {
+                                for (ParseObject delete: objects) {
+                                    delete.deleteInBackground();
+                                    Toast.makeText(ProductDetailActivity.this, "Delete Successfully", Toast.LENGTH_SHORT);
+                                }
+                                finish();
+//                                ProductDetailActivity.this.startActivity(new Intent(ProductDetailActivity.this, MyListingsPageActivity.class));
+                            } else {
+                                Toast.makeText(ProductDetailActivity.this, e.getMessage(), Toast.LENGTH_SHORT);
+                            }
+                        }
+                    });
+
+                }
+            });
         }
 
         btnCancel.setOnClickListener(new OnClickListener() {
