@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -19,6 +20,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.starter.R;
+import com.parse.starter.activity.BuyPageActivity;
 import com.parse.starter.adapter.RecyclerViewAdapter;
 import com.parse.starter.object.Item;
 
@@ -39,6 +41,7 @@ public class ContentMyListingsBuy extends Fragment {
 
         recyclerViewAdapter = new RecyclerViewAdapter(this.getActivity());
         recyclerView.setAdapter(recyclerViewAdapter);
+
         getBuyData();
         return view;
 
@@ -51,10 +54,12 @@ public class ContentMyListingsBuy extends Fragment {
     private void getBuyData() {
         ParseUser currentUser = ParseUser.getCurrentUser();
         List<String> buyProducts = (List<String>)currentUser.get("buyProduct");
-        System.out.println("buyProducts" + buyProducts);
+        //System.out.println("buyProducts" + buyProducts);
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Item").whereContainedIn("objectId", buyProducts);
+
         query.addDescendingOrder("createdAt");
+
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
@@ -73,11 +78,12 @@ public class ContentMyListingsBuy extends Fragment {
                         //System.out.println(item.title);
                     }
 
-                    //System.out.println(items);
+                    System.out.println(items);
                     //TODO
                     //display the users that the current user has bought
                     recyclerViewAdapter.setItems(items);
                 } else {
+
                 }
             }
         });

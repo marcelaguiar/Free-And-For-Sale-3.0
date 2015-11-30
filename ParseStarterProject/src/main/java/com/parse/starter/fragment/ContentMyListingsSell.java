@@ -26,13 +26,13 @@ import java.util.List;
 
 
 public class ContentMyListingsSell extends Fragment {
-
+    RecyclerView recyclerView;
+    RecyclerViewAdapter recyclerViewAdapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        RecyclerView recyclerView;
-        RecyclerViewAdapter recyclerViewAdapter;
+
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_content_my_listings_buy, container, false);
@@ -53,7 +53,7 @@ public class ContentMyListingsSell extends Fragment {
 
     private void getSellData() {
         ParseUser currentUser = ParseUser.getCurrentUser();
-        String userID = (String) currentUser.get("objectID");
+        String userID = (String) currentUser.get("objectId");
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Item").whereContains("ACL", userID);
         query.addDescendingOrder("createdAt");
@@ -71,7 +71,7 @@ public class ContentMyListingsSell extends Fragment {
                         item.updatedAt = parseObject.getUpdatedAt();
                         items.add(item);
                     }
-
+                    recyclerViewAdapter.setItems(items);
                     //TODO
                     //display the users that the current user has bought
                 } else {
