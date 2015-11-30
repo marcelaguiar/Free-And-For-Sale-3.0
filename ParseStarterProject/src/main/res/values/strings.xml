@@ -20,11 +20,11 @@
     <string name="action_logout">Logout</string>
 
     //Activity titles
-    <string name="title_activity_buy_page">BuyPageActivity</string>
-    <string name="title_activity_sell_page">SellPageActivity</string>
-    <string name="title_activity_my_listings_page">MyListingsPageActivity</string>
-    <string name="title_activity_product_detail_page">ProductDetailActivity</string>
-    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_buy_page">BuyPage</string>
+    <string name="title_activity_sell_page">SellPage</string>
+    <string name="title_activity_my_listings_page">MyListingsPage</string>
+    <string name="title_activity_product_detail_page">ProductDetail</string>
+    <string name="title_activity_login">Login</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="buy_string">Buy</string>
