@@ -56,6 +56,8 @@ public class ContentMyListingsBuy extends Fragment {
         List<String> buyProducts = (List<String>)currentUser.get("buyProduct");
         //System.out.println("buyProducts" + buyProducts);
 
+        if (buyProducts == null) return;
+
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Item").whereContainedIn("objectId", buyProducts);
 
         query.addDescendingOrder("createdAt");
