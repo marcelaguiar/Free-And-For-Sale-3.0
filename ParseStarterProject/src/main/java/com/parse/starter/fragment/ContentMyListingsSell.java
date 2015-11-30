@@ -26,20 +26,17 @@ import java.util.List;
 
 
 public class ContentMyListingsSell extends Fragment {
-
+    RecyclerView recyclerView;
+    RecyclerViewAdapter recyclerViewAdapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        RecyclerView recyclerView;
-        RecyclerViewAdapter recyclerViewAdapter;
-
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_content_my_listings_buy, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.buying_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 
-        recyclerViewAdapter = new RecyclerViewAdapter(this.getActivity());
+        recyclerViewAdapter = new RecyclerViewAdapter(this.getActivity(), 2);
         recyclerView.setAdapter(recyclerViewAdapter);
         getSellData();
         return view;
@@ -53,10 +50,12 @@ public class ContentMyListingsSell extends Fragment {
 
     private void getSellData() {
         ParseUser currentUser = ParseUser.getCurrentUser();
-        String userID = (String) currentUser.get("objectID");
+        List<String> sellProducts = (List<String>)currentUser.get("sellProduct");
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Item").whereContains("ACL", userID);
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Item").whereContainedIn("objectId", sellProducts);
+
         query.addDescendingOrder("createdAt");
+
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
@@ -70,11 +69,17 @@ public class ContentMyListingsSell extends Fragment {
                         item.createdAt = parseObject.getCreatedAt();
                         item.updatedAt = parseObject.getUpdatedAt();
                         items.add(item);
+
+                        //print the title
+                        //System.out.println(item.title);
                     }
 
+                    System.out.println(items);
                     //TODO
                     //display the users that the current user has bought
+                    recyclerViewAdapter.setItems(items);
                 } else {
+
                 }
             }
         });

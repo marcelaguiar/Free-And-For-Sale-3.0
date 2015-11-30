@@ -14,13 +14,17 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.parse.starter.R;
 import com.parse.starter.object.Item;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class ProductDetailActivity extends AppCompatActivity {
 
@@ -31,6 +35,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     Button btnBuy;
     Button btnCancel;
     Item item;
+    int whichCase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,31 +59,60 @@ public class ProductDetailActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
+        whichCase = intent.getIntExtra("whichCase", 0);
         item = intent.getParcelableExtra("item");
         tvTitle.setText(item.title);
         tvDescription.setText(item.description);
 
-        btnBuy.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO put the product and user into the data base
-                ParseUser currentUser = ParseUser.getCurrentUser();
-                currentUser.addUnique("buyProduct", item.objectId);
-                currentUser.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if (e == null) {
-                            Toast.makeText(ProductDetailActivity.this,
-                                    "An email with your info has already sent to seller successfully", Toast.LENGTH_SHORT).show();
-                            finish();
-                        } else {
-                            Toast.makeText(ProductDetailActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        if (whichCase == 1) {
+            btnBuy.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //TODO put the product and user into the data base
+                    ParseUser currentUser = ParseUser.getCurrentUser();
+                    currentUser.addUnique("buyProduct", item.objectId);
+                    currentUser.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null) {
+                                Toast.makeText(ProductDetailActivity.this,
+                                        "An email with your info has already sent to seller successfully", Toast.LENGTH_SHORT).show();
+                                finish();
+                            } else {
+                                Toast.makeText(ProductDetailActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
+                    });
 
-            }
-        });
+                }
+            });
+        } else if (whichCase == 2) {
+            btnBuy.setText("Delete");
+            btnBuy.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    ParseQuery<ParseObject> query = ParseQuery.getQuery("Item");
+                    query.whereEqualTo("objectId", item.objectId);
+                    query.findInBackground(new FindCallback<ParseObject>() {
+                        @Override
+                        public void done(List<ParseObject> objects, ParseException e) {
+                            if (e == null) {
+                                for (ParseObject delete: objects) {
+                                    delete.deleteInBackground();
+                                    Toast.makeText(ProductDetailActivity.this, "Delete Successfully", Toast.LENGTH_SHORT);
+                                }
+                                finish();
+//                                ProductDetailActivity.this.startActivity(new Intent(ProductDetailActivity.this, MyListingsPageActivity.class));
+                            } else {
+                                Toast.makeText(ProductDetailActivity.this, e.getMessage(), Toast.LENGTH_SHORT);
+                            }
+                        }
+                    });
+
+                }
+            });
+        }
 
         btnCancel.setOnClickListener(new OnClickListener() {
             @Override

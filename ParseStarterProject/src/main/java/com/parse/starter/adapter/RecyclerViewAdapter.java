@@ -22,11 +22,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private final Context context;
     private final LayoutInflater layoutInflater;
     private List<Item> items;
+    private int whichCase;
 
-    public RecyclerViewAdapter(Context context) {
+    public RecyclerViewAdapter(Context context, int whichCase) {
         this.context = context;
         layoutInflater = LayoutInflater.from(context);
         this.items = new ArrayList<>();
+        this.whichCase = whichCase;
     }
 
     public void setItems(List<Item> items) {
@@ -45,14 +47,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.description.setText(items.get(position).description);
 
         final int curPosition = position;
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, ProductDetailActivity.class);
-                intent.putExtra("item", items.get(curPosition));
-                context.startActivity(intent);
-            }
-        });
+
+        if (whichCase == 1 || whichCase == 2) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ProductDetailActivity.class);
+                    intent.putExtra("item", items.get(curPosition));
+                    intent.putExtra("whichCase", whichCase);
+                    context.startActivity(intent);
+                }
+            });
+        }
     }
 
     @Override

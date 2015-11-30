@@ -26,9 +26,9 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         // Returns a new instance of the fragment
         switch (position) {
             case 0:
-                return new ContentMyListingsBuy();
-            case 1:
                 return new ContentMyListingsSell();
+            case 1:
+                return new ContentMyListingsBuy();
         }
         return null;
     }

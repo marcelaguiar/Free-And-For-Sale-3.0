@@ -51,7 +51,7 @@ public class SellPageActivity extends AppCompatActivity {
 
                 if (!titleStr.isEmpty() && !descriptionStr.isEmpty()) {
                     submit.setEnabled(false);
-                    ParseObject parseObject = new ParseObject("Item");
+                    final ParseObject parseObject = new ParseObject("Item");
                     parseObject.put("title", titleStr);
                     parseObject.put("description", descriptionStr);
                     parseObject.getACL().setPublicReadAccess(true);
@@ -61,8 +61,22 @@ public class SellPageActivity extends AppCompatActivity {
                         public void done(ParseException e) {
                             submit.setEnabled(true);
                             if (e == null) {
-                                Toast.makeText(SellPageActivity.this, "Post successfully", Toast.LENGTH_SHORT).show();
-                                finish();
+                                ParseUser currentUser = ParseUser.getCurrentUser();
+                                currentUser.addUnique("sellProduct", parseObject.getObjectId());
+
+                                currentUser.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        if (e == null) {
+                                            Toast.makeText(SellPageActivity.this, "Post successfully", Toast.LENGTH_SHORT).show();
+                                            finish();
+                                        } else {
+                                            Toast.makeText(SellPageActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+
+
                             } else {
                                 Toast.makeText(SellPageActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                             }

@@ -41,20 +41,21 @@ public class MyListingsPageActivity extends AppCompatActivity implements TabLayo
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // the tablayout
-        final TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
 
         // Set up the ViewPager with the sections adapter.
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager = (ViewPager) findViewById(R.id.viewPager);
 
         viewPager.setAdapter(viewPagerAdapter);
-        System.out.println("dskjfdkjsfkdsjflksdjfjdsklfj");
+
         for (int i = 0; i < viewPagerAdapter.getCount(); i++) {
             tabLayout.addTab(tabLayout.newTab().setText(viewPagerAdapter.getPageTitle(i)));
         }
 
         tabLayout.setOnTabSelectedListener(this);
         tabLayout.setupWithViewPager(viewPager);
+
     }
 
     // listener for TabLayout's tabs
