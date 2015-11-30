@@ -25,6 +25,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //create the views for login page
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -37,11 +38,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void initialize() {
+        // if the user has logged in, simply go to main page
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
             goToMain();
         }
 
+        //
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
         Button login = (Button) findViewById(R.id.signin_button);
@@ -59,12 +62,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
+        // get string from user
         String usernameStr = username.getText().toString().trim();
         String passwordStr = password.getText().toString();
 
         switch(v.getId()) {
             case R.id.signin_button:
-
+                // signin the user only when username and password are non-empty
                 if (!usernameStr.isEmpty() && !passwordStr.isEmpty()) {
                     ParseUser.logInInBackground(usernameStr, passwordStr, new LogInCallback() {
                         @Override
@@ -80,6 +84,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
 
             case R.id.register_button:
+                // register the user only when username and password are non-empty
                 if (!usernameStr.isEmpty() && !passwordStr.isEmpty()) {
                     ParseUser user = new ParseUser();
                     user.setUsername(usernameStr);

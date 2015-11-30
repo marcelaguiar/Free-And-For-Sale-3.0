@@ -34,9 +34,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    ParseObject testObject = new ParseObject("TestObject");
-    testObject.put("oof", "rab");
-    testObject.saveInBackground();
     ParseAnalytics.trackAppOpenedInBackground(getIntent());
 
     // jump
@@ -63,7 +60,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
           case R.id.action_logout:
               dialog();
       }
-
 
     return super.onOptionsItemSelected(item);
   }
@@ -104,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         builder.create().show();
     }
 
-
+    // handle the click
     @Override
   public void onClick(View v) {
     switch (v.getId()) {
@@ -120,19 +116,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
   }
 
-    /** Called when the user clicks the Buy button */
+    // jump to buy page
     public void buyPage() {
         Intent intent = new Intent(MainActivity.this, BuyPageActivity.class);
         startActivity(intent);
     }
 
-    /** Called when the user clicks the Sell button */
+    // jump to sell page
     public void sellPage() {
         Intent intent = new Intent(MainActivity.this, SellPageActivity.class);
         startActivity(intent);
     }
 
-    /** Called when the user clicks the My Listings button */
+    // jump to my listing page
     public void myListingsPage() {
         Intent intent = new Intent(MainActivity.this, MyListingsPageActivity.class);
         startActivity(intent);

@@ -22,7 +22,6 @@ import com.parse.SaveCallback;
 import com.parse.starter.R;
 
 public class SellPageActivity extends AppCompatActivity {
-
     Button submit;
     EditText title;
     EditText description;
@@ -43,19 +42,24 @@ public class SellPageActivity extends AppCompatActivity {
         title = (EditText) findViewById(R.id.title);
         description = (EditText) findViewById(R.id.description);
 
+
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // get the title and description from text
                 String titleStr = title.getText().toString().trim();
                 String descriptionStr = description.getText().toString().trim();
 
+
                 if (!titleStr.isEmpty() && !descriptionStr.isEmpty()) {
                     submit.setEnabled(false);
+                    // create a parse object for the item and send it to parse server
                     final ParseObject parseObject = new ParseObject("Item");
                     parseObject.put("title", titleStr);
                     parseObject.put("description", descriptionStr);
                     parseObject.getACL().setPublicReadAccess(true);
 
+                    // send the object to parse server
                     parseObject.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
@@ -105,11 +109,10 @@ public class SellPageActivity extends AppCompatActivity {
                 dialog();
         }
 
-
         return super.onOptionsItemSelected(item);
     }
 
-
+    // logout dialog
     protected void dialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(SellPageActivity.this);
         builder.setMessage(R.string.logout_verify);
@@ -144,6 +147,4 @@ public class SellPageActivity extends AppCompatActivity {
 
         builder.create().show();
     }
-
-
 }
