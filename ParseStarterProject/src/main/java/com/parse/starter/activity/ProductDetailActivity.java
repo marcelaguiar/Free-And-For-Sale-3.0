@@ -31,6 +31,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     Button btnBuy;
     Button btnCancel;
     Item item;
+    int whichCase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,31 +55,57 @@ public class ProductDetailActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
+        whichCase = intent.getIntExtra("whichCase", 0);
         item = intent.getParcelableExtra("item");
         tvTitle.setText(item.title);
         tvDescription.setText(item.description);
 
-        btnBuy.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO put the product and user into the data base
-                ParseUser currentUser = ParseUser.getCurrentUser();
-                currentUser.addUnique("buyProduct", item.objectId);
-                currentUser.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if (e == null) {
-                            Toast.makeText(ProductDetailActivity.this,
-                                    "An email with your info has already sent to seller successfully", Toast.LENGTH_SHORT).show();
-                            finish();
-                        } else {
-                            Toast.makeText(ProductDetailActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        if (whichCase == 1) {
+            btnBuy.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //TODO put the product and user into the data base
+                    ParseUser currentUser = ParseUser.getCurrentUser();
+                    currentUser.addUnique("buyProduct", item.objectId);
+                    currentUser.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null) {
+                                Toast.makeText(ProductDetailActivity.this,
+                                        "An email with your info has already sent to seller successfully", Toast.LENGTH_SHORT).show();
+                                finish();
+                            } else {
+                                Toast.makeText(ProductDetailActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
+                    });
 
-            }
-        });
+                }
+            });
+        } else if (whichCase == 2) {
+            btnBuy.setText("Delete");
+//            btnBuy.setOnClickListener(new OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//
+//                    ParseUser currentUser = ParseUser.getCurrentUser();
+//                    currentUser.addUnique("buyProduct", item.objectId);
+//                    currentUser.saveInBackground(new SaveCallback() {
+//                        @Override
+//                        public void done(ParseException e) {
+//                            if (e == null) {
+//                                Toast.makeText(ProductDetailActivity.this,
+//                                        "An email with your info has already sent to seller successfully", Toast.LENGTH_SHORT).show();
+//                                finish();
+//                            } else {
+//                                Toast.makeText(ProductDetailActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
+//                    });
+//
+//                }
+//            });
+        }
 
         btnCancel.setOnClickListener(new OnClickListener() {
             @Override

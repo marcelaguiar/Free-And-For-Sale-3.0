@@ -39,7 +39,7 @@ public class ContentMyListingsBuy extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.buying_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 
-        recyclerViewAdapter = new RecyclerViewAdapter(this.getActivity());
+        recyclerViewAdapter = new RecyclerViewAdapter(this.getActivity(), 3);
         recyclerView.setAdapter(recyclerViewAdapter);
 
         getBuyData();

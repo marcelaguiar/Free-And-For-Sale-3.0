@@ -46,7 +46,7 @@ public class BuyPageActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.buying_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        recyclerViewAdapter = new RecyclerViewAdapter(this);
+        recyclerViewAdapter = new RecyclerViewAdapter(this, 1);
         recyclerView.setAdapter(recyclerViewAdapter);
 
         getData();
