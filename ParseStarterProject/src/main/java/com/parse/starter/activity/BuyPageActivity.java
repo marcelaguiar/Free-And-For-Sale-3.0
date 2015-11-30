@@ -36,24 +36,23 @@ public class BuyPageActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //create the views for buy page
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy_page);
         setTitle(R.string.title_activity_buy_page);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         recyclerView = (RecyclerView) findViewById(R.id.buying_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         recyclerViewAdapter = new RecyclerViewAdapter(this, 1);
         recyclerView.setAdapter(recyclerViewAdapter);
 
+        //get data from parse and display the items for the user to buy
         getData();
-
     }
 
     private void getData() {
+        //get data from parse using a query
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Item");
         query.addDescendingOrder("createdAt");
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -101,7 +100,7 @@ public class BuyPageActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
+    //display the dialog for logout
     protected void dialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(BuyPageActivity.this);
         builder.setMessage(R.string.logout_verify);
@@ -136,6 +135,4 @@ public class BuyPageActivity extends AppCompatActivity {
 
         builder.create().show();
     }
-
-
 }
