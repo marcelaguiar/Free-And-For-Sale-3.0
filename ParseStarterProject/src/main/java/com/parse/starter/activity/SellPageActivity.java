@@ -50,7 +50,7 @@ public class SellPageActivity extends AppCompatActivity {
                 String titleStr = title.getText().toString().trim();
                 String descriptionStr = description.getText().toString().trim();
 
-
+                // only post the item when the title and descirption are both non-empty
                 if (!titleStr.isEmpty() && !descriptionStr.isEmpty()) {
                     submit.setEnabled(false);
                     // create a parse object for the item and send it to parse server

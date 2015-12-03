@@ -92,7 +92,6 @@ public class MyListingsPageActivity extends AppCompatActivity implements TabLayo
             case R.id.action_logout:
                 dialog();
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -120,16 +119,12 @@ public class MyListingsPageActivity extends AppCompatActivity implements TabLayo
                 }
             }
         });
-
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
         });
-
         builder.create().show();
     }
-
-
 }

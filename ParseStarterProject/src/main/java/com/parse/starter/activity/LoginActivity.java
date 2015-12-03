@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             goToMain();
         }
 
-        //
+
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
         Button login = (Button) findViewById(R.id.signin_button);

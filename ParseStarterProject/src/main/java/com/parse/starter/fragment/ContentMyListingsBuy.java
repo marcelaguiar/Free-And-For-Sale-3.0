@@ -44,17 +44,12 @@ public class ContentMyListingsBuy extends Fragment {
 
         getBuyData();
         return view;
-
-//        ImageView iv = new ImageView(getActivity());
-//        iv.setImageResource(R.drawable.img1);
-//
-//        return iv;
     }
 
+    // retrieve and display data of items that are bought by the current user, from parse
     private void getBuyData() {
         ParseUser currentUser = ParseUser.getCurrentUser();
         List<String> buyProducts = (List<String>)currentUser.get("buyProduct");
-        //System.out.println("buyProducts" + buyProducts);
 
         if (buyProducts == null) return;
 
@@ -75,14 +70,7 @@ public class ContentMyListingsBuy extends Fragment {
                         item.createdAt = parseObject.getCreatedAt();
                         item.updatedAt = parseObject.getUpdatedAt();
                         items.add(item);
-
-                        //print the title
-                        //System.out.println(item.title);
                     }
-
-                    System.out.println(items);
-                    //TODO
-                    //display the users that the current user has bought
                     recyclerViewAdapter.setItems(items);
                 } else {
 

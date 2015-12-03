@@ -45,7 +45,6 @@ public class ProductDetailActivity extends AppCompatActivity {
         setTitle(R.string.title_activity_product_detail_page);
 
         initialize();
-
     }
 
     private void initialize() {
@@ -64,11 +63,11 @@ public class ProductDetailActivity extends AppCompatActivity {
         tvTitle.setText(item.title);
         tvDescription.setText(item.description);
 
-        if (whichCase == 1) {
+        if (whichCase == 1) { // handle the case when the user is on a buy page
             btnBuy.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //TODO put the product and user into the data base
+                    // put the item and user in database
                     ParseUser currentUser = ParseUser.getCurrentUser();
                     currentUser.addUnique("buyProduct", item.objectId);
                     currentUser.saveInBackground(new SaveCallback() {
@@ -86,12 +85,12 @@ public class ProductDetailActivity extends AppCompatActivity {
 
                 }
             });
-        } else if (whichCase == 2) {
+        } else if (whichCase == 2) { // handle the case when the user is on my listing page
             btnBuy.setText("Delete");
             btnBuy.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    // delete the item in database
                     ParseQuery<ParseObject> query = ParseQuery.getQuery("Item");
                     query.whereEqualTo("objectId", item.objectId);
                     query.findInBackground(new FindCallback<ParseObject>() {
