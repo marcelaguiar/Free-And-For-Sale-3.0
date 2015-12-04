@@ -23,8 +23,10 @@ public class loginTest {
     public ActivityTestRule<LoginActivity> activityRule = new ActivityTestRule(LoginActivity.class);
     @Test
     public void firstTest(){
+        // logout if already logged in
         if (ParseUser.getCurrentUser() != null) ParseUser.logOut();
 
+        // try to login the dummy user
         onView(withId(R.id.username)).perform(typeText("test"));
         onView(withId(R.id.password)).perform(typeText("test"));
         onView(withId(R.id.signin_button)).perform(click());
