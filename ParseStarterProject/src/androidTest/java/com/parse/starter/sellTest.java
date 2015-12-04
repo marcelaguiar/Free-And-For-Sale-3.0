@@ -33,28 +33,28 @@ public class sellTest {
     public ActivityTestRule<MainActivity> activityRule = new ActivityTestRule(MainActivity.class);
     @Test
     public void test() throws Exception{
-        // login the dummy user
+        // Given that I am logged in
         if (ParseUser.getCurrentUser() == null) ParseUser.logIn("test", "test");
 
-        // try to sell an item
+        // I click the sell button
         onView(withId(R.id.sellButton)).perform(click());
 
         Thread.sleep(2000);
+
+        // I type in the title and description of the item that I want to sell
         onView(withId(R.id.title)).perform(typeText("testTitle"));
         onView(withId(R.id.description)).perform(typeText("testDesc"));
         closeSoftKeyboard();
 
+        // I click the submit button
         onView(withId(R.id.submitButton)).perform(click());
 
-        // check if the item is in my listing page
         Thread.sleep(2000);
 
-        // a potential failure here:
-        // tried to click myListingsButton before pressBack() is finished
-
+        // I click the mylisting button
         onView(withId(R.id.myListingsButton)).perform(click());
 
-        // check if the bought items is displayed
+        // and I find that the item that I posted is there
         Thread.sleep(2000);
     }
 }

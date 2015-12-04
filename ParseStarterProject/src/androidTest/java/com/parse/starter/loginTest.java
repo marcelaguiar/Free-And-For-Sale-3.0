@@ -22,14 +22,20 @@ public class loginTest {
     @Rule
     public ActivityTestRule<LoginActivity> activityRule = new ActivityTestRule(LoginActivity.class);
     @Test
-    public void firstTest(){
-        // logout if already logged in
+    public void firstTest() throws Exception{
         if (ParseUser.getCurrentUser() != null) ParseUser.logOut();
 
-        // try to login the dummy user
+        // Given that I have an account for the app
+
+        // I type in my username and password
         onView(withId(R.id.username)).perform(typeText("test"));
         onView(withId(R.id.password)).perform(typeText("test"));
+
+        // I click the sign in button
         onView(withId(R.id.signin_button)).perform(click());
+
+        // and I am logged in and redirected to the main page
+        Thread.sleep(2000);
 
     }
 }

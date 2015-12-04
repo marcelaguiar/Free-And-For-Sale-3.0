@@ -31,29 +31,29 @@ public class buyTest {
     public ActivityTestRule<MainActivity> activityRule = new ActivityTestRule(MainActivity.class);
     @Test
     public void test() throws Exception{
-        // login the dummy user
+        // Given that I am logged in
         if (ParseUser.getCurrentUser() == null) ParseUser.logIn("test", "test");
 
-        // try to buy an item
+        // I click the buy button
         onView(withId(R.id.buyButton)).perform(click());
 
         Thread.sleep(2000);
+
+        // I click the first item displayed on the buy page
         onView(withId(R.id.buying_list)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
-
+        // I click the buy button of the item
         onView(withId(R.id.buy_btn)).perform(click());
 
-        // check if the item is in my listing page
+        // I press the back button to go back to the main page
         pressBack();
         Thread.sleep(2000);
 
-        // a potential failure here:
-        // tried to click myListingsButton before pressBack() is finished
-        
+        // I click the my listing page, and I swipe left to the buy history page
         onView(withId(R.id.myListingsButton)).perform(click());
         onView(withId(R.id.viewPager)).perform(swipeLeft());
 
-        // check if the bought items is displayed
+        // and the item that I just bought is in the buy history page
         Thread.sleep(2000);
     }
 }
