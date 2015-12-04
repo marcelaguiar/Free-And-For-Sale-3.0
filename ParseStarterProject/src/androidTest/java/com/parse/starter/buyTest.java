@@ -25,6 +25,15 @@ import static android.support.test.espresso.action.ViewActions.*;
 import static android.support.test.espresso.matcher.ViewMatchers.*;
 import static junit.framework.Assert.*;
 
+/* Given that I am logged in
+ * I click the buy button
+ * I click the first item displayed on the buy page
+ * I click the buy button of the item
+ * I press the back button to go back to the main page
+ * I click the my listing page, and I swipe left to the buy history page
+ * and the item that I just bought is in the buy history page
+ * */
+
 @RunWith(AndroidJUnit4.class)
 public class buyTest {
     @Rule

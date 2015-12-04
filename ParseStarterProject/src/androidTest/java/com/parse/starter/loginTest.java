@@ -17,6 +17,12 @@ import static android.support.test.espresso.action.ViewActions.*;
 import static android.support.test.espresso.matcher.ViewMatchers.*;
 import static junit.framework.Assert.*;
 
+/* Given that I have an account for the app
+ * I type in my username and password
+ * I click the sign in button
+ * and I am logged in and redirected to the main page
+ * */
+
 @RunWith(AndroidJUnit4.class)
 public class loginTest {
     @Rule

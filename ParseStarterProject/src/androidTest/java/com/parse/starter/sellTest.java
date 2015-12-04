@@ -27,6 +27,14 @@ import static android.support.test.espresso.action.ViewActions.*;
 import static android.support.test.espresso.matcher.ViewMatchers.*;
 import static junit.framework.Assert.*;
 
+/* Given that I am logged in
+ * I click the sell button
+ * I type in the title and description of the item that I want to sell
+ * I click the submit button
+ * I click the mylisting button
+ * and I find that the item that I posted is there
+ * */
+
 @RunWith(AndroidJUnit4.class)
 public class sellTest {
     @Rule
