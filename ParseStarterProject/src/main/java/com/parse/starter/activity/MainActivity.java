@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     setContentView(R.layout.activity_main);
     ParseAnalytics.trackAppOpenedInBackground(getIntent());
 
-    // jump
+    // register call back function to handle clicks
     findViewById(R.id.buyButton).setOnClickListener(this);
     findViewById(R.id.sellButton).setOnClickListener(this);
     findViewById(R.id.myListingsButton).setOnClickListener(this);
@@ -133,6 +133,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = new Intent(MainActivity.this, MyListingsPageActivity.class);
         startActivity(intent);
     }
-
-
 }
