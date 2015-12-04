@@ -1,9 +1,12 @@
 package com.parse.starter;
 
 import android.app.Activity;
+import android.support.test.espresso.ViewAssertion;
+import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import static android.support.test.espresso.assertion.ViewAssertions.*;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
@@ -27,19 +30,30 @@ public class buyTest {
     @Rule
     public ActivityTestRule<MainActivity> activityRule = new ActivityTestRule(MainActivity.class);
     @Test
-    public void firstTest() throws Exception{
+    public void test() throws Exception{
         // login the dummy user
-        if (ParseUser.getCurrentUser() != null) ParseUser.logIn("test", "test");
+        if (ParseUser.getCurrentUser() == null) ParseUser.logIn("test", "test");
 
         // try to buy an item
         onView(withId(R.id.buyButton)).perform(click());
+
+        Thread.sleep(2000);
         onView(withId(R.id.buying_list)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+
+
         onView(withId(R.id.buy_btn)).perform(click());
 
         // check if the item is in my listing page
         pressBack();
+        Thread.sleep(2000);
+
+        // a potential failure here:
+        // tried to click myListingsButton before pressBack() is finished
         
         onView(withId(R.id.myListingsButton)).perform(click());
+        onView(withId(R.id.viewPager)).perform(swipeLeft());
 
+        // check if the bought items is displayed
+        Thread.sleep(2000);
     }
 }
